@@ -1,6 +1,7 @@
 package com.hypech.case83_listview_arrayadapter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import android.os.Bundle;
 import android.view.View;
@@ -20,17 +21,25 @@ public class MainActivity extends AppCompatActivity {
     AMessage msg1, msg2, msg3, msg4, msg;
     List<AMessage> msgList = new ArrayList<AMessage>();
 
+    ARoomDB db;
+    LiveData<List<AMessage>> aMessageLiveData;
+    List<AMessage> msgRoomList = new ArrayList<AMessage>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initMsgs();         //feed the data
-int i =1;
+        //initMsgs();         //feed the data
+
+        db = ARoomDB.getDatabase(this);
+        int i = 1;
+        msgRoomList = db.getMessageDao().getAll();
+
         inputText= findViewById(R.id.edit_text);
         btnSend  = findViewById(R.id.button_send);
         listView = findViewById(R.id.list_view);
 
-        adapter = new AAdapter(MainActivity.this, R.layout.a_item_sent_text, msgList);
+        adapter = new AAdapter(MainActivity.this, R.layout.a_item_sent_text, msgRoomList);
         listView.setAdapter(adapter);
 
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -60,4 +69,14 @@ int i =1;
         msgList.add(msg4);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(db!=null){
+            if(db.isOpen()) {
+                db.close();
+            }
+            db=null;
+        }
+    }
 }
