@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 String content = inputText.getText().toString();
                 if (content != null && !"".equals(content)) {
                     msg = new AMessage("dd","S", content, "Home");
-                    msgList.add(msg);
+                    msgRoomList.add(msg);
                     adapter.notifyDataSetChanged();             // refresh ListView when new messages coming
-                    listView.setSelection(msgList.size());   // go to the end of the ListView
+                    listView.setSelection(msgRoomList.size());   // go to the end of the ListView
                     inputText.setText("");
                 }
             }
