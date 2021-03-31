@@ -1,4 +1,4 @@
-package com.hypech.case83_listview_arrayadapter;
+package com.hypech.case83_listview_room;
 
 import org.junit.Test;
 
