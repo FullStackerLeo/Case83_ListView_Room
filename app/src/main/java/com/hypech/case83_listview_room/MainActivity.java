@@ -22,17 +22,15 @@ public class MainActivity extends AppCompatActivity {
     List<AMessage> msgList = new ArrayList<AMessage>();
 
     ARoomDB db;
-    LiveData<List<AMessage>> aMessageLiveData;
     List<AMessage> msgRoomList = new ArrayList<AMessage>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //initMsgs();         //feed the data
+        initMsgs();         //feed the data
 
         db = ARoomDB.getDatabase(this);
-        int i = 1;
         msgRoomList = db.getMessageDao().getAll();
 
         inputText= findViewById(R.id.edit_text);
